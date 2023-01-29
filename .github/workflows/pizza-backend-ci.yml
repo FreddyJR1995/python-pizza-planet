@@ -23,7 +23,8 @@ jobs:
         python -m pip install --upgrade pip
         python -m venv venv
         source venv/bin/activate
+        pip install pytest
         pip install -r requirements.txt
     - name: Run tests
       run: |
-        python3 -m pytest coverage run --source=app -v app/test && python3 -m coverage report
+        python -m pytest app/test
