@@ -13,16 +13,17 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
     - name: Set up Python
       uses: actions/setup-python@v3
       with:
         python-version: 3.8.x
     - name: Install dependencies
       run: |
+        python -m pip install --upgrade pip
         python -m venv venv
         source venv/bin/activate
         pip install -r requirements.txt
     - name: Run tests
       run: |
-        coverage run --source=app -m pytest -v app/test && coverage report -m
+        python3 -m pytest coverage run --source=app -v app/test && python3 -m coverage report
