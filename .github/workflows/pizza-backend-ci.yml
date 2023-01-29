@@ -25,4 +25,4 @@ jobs:
         pip install -r requirements.txt
     - name: Run tests
       run: |
-        python -m pytest --cov
+        coverage run --source=app -m pytest -v app/test && coverage report -m
