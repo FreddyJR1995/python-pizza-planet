@@ -21,8 +21,19 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install pytest
+        pip install 'coverage[toml]' pytest pytest-cov
         pip install -r requirements.txt
     - name: Run tests
       run: |
         python -m pytest app/test
+    - name: Generate Coverage
+      run: |
+        python -m pytest --cache-clear --cov-config=.coveragerc --cov=app/ app/test/* > pytest-coverage.txt
+    - name: Generate coverage comment
+      uses: coroo/pytest-coverage-commentator@v1.0.2
+      with:
+        pytest-coverage: pytest-coverage.txt
+    - name: Check threshold of coverage
+      run: |
+        coverage report -m --fail-under=95
+
