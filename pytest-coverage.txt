@@ -1,0 +1,63 @@
+============================= test session starts ==============================
+platform linux -- Python 3.8.10, pytest-6.2.5, py-1.11.0, pluggy-1.0.0
+rootdir: /home/snuc/Documents/IOET_TT_Projects/IOET University exercise/python-pizza-planet
+plugins: assume-2.4.3, cov-4.0.0
+collected 31 items
+
+app/test/controllers/test_beverage.py ....                               [ 12%]
+app/test/controllers/test_ingredient.py ....                             [ 25%]
+app/test/controllers/test_order.py ....                                  [ 38%]
+app/test/controllers/test_size.py ....                                   [ 51%]
+app/test/services/test_beverage.py ....                                  [ 64%]
+app/test/services/test_ingredient.py ....                                [ 77%]
+app/test/services/test_order.py ...                                      [ 87%]
+app/test/services/test_size.py ....                                      [100%]
+
+---------- coverage: platform linux, python 3.8.10-final-0 -----------
+Name                                      Stmts   Miss  Cover
+-------------------------------------------------------------
+app/__init__.py                              26      0   100%
+app/common/http_methods.py                    3      0   100%
+app/common/utils.py                           2      0   100%
+app/controllers/__init__.py                   5      0   100%
+app/controllers/base.py                      32      9    72%
+app/controllers/beverage.py                   4      0   100%
+app/controllers/index.py                     11      5    55%
+app/controllers/ingredient.py                 4      0   100%
+app/controllers/order.py                     32      4    88%
+app/controllers/size.py                       4      0   100%
+app/plugins.py                                4      0   100%
+app/repositories/managers.py                 65      2    97%
+app/repositories/models.py                   38      0   100%
+app/repositories/serializers.py              37      0   100%
+app/services/__init__.py                      5      0   100%
+app/services/base.py                         15      0   100%
+app/services/beverage.py                     18      0   100%
+app/services/index.py                         8      2    75%
+app/services/ingredient.py                   18      0   100%
+app/services/order.py                        18      1    94%
+app/services/size.py                         18      0   100%
+app/settings.py                               6      0   100%
+app/test/__init__.py                          0      0   100%
+app/test/conftest.py                         32      0   100%
+app/test/controllers/__init__.py              0      0   100%
+app/test/controllers/test_beverage.py        38      0   100%
+app/test/controllers/test_ingredient.py      38      0   100%
+app/test/controllers/test_order.py           73      0   100%
+app/test/controllers/test_size.py            35      0   100%
+app/test/fixtures/__init__.py                 0      0   100%
+app/test/fixtures/beverage.py                24      0   100%
+app/test/fixtures/ingredient.py              24      0   100%
+app/test/fixtures/order.py                   19      0   100%
+app/test/fixtures/size.py                    24      0   100%
+app/test/services/__init__.py                 0      0   100%
+app/test/services/test_beverage.py           29      0   100%
+app/test/services/test_ingredient.py         29      0   100%
+app/test/services/test_order.py              28      0   100%
+app/test/services/test_size.py               29      0   100%
+app/test/utils/functions.py                  23      2    91%
+-------------------------------------------------------------
+TOTAL                                       818     25    97%
+
+
+============================== 31 passed in 3.19s ==============================
