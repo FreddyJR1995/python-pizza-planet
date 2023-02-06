@@ -1,6 +1,6 @@
 from typing import Any, List, Optional, Sequence
-
-from sqlalchemy.sql import text, column
+from sqlalchemy.sql import text, column, func, desc, extract
+from datetime import datetime
 
 from .models import Beverage, Ingredient, Order, OrderDetail, Size, OrderBeverage, db
 from .serializers import (IngredientSerializer, OrderSerializer,
@@ -67,6 +67,7 @@ class OrderManager(BaseManager):
     @classmethod
     def create(cls, order_data: dict, ingredients: List[Ingredient], beverages: List[Beverage]):
         new_order = cls.model(**order_data)
+        new_order.date = datetime.now() if new_order.date is None else datetime.strptime(new_order.date, '%Y-%m-%d %H:%M:%S')
         cls.session.add(new_order)
         cls.session.flush()
         cls.session.refresh(new_order)
@@ -87,3 +88,34 @@ class IndexManager(BaseManager):
     @classmethod
     def test_connection(cls):
         cls.session.query(column('1')).from_statement(text('SELECT 1')).all()
+
+class ReportManager(BaseManager):
+
+    @classmethod
+    def get_most_requested_ingredient(cls)-> dict:
+        result = cls.session.query(Ingredient.name, func.count(OrderDetail.ingredient_id).label('total')).join(OrderDetail).group_by(Ingredient).order_by(desc('total')).first()
+
+        return {"ingredient": result.name, "total":result.total} if result is not None else {}
+
+    @classmethod
+    def get_month_with_most_revenue(cls)-> dict:
+        result = cls.session.query( extract('month', Order.date).label('month'), extract('year', Order.date).label('year'), func.sum(Order.total_price).label('total_sales')).group_by('month').order_by(desc('total_sales')).first()
+
+        return {"month": result.month, "year": result.year, "total_sales": round(result.total_sales,2)} if result is not None else {}
+
+    @classmethod
+    def get_top_customers(cls)-> list:
+        top_customers = []
+        result = cls.session.query(Order.client_name, func.sum(Order.total_price).label('total')).group_by(Order.client_name).order_by(desc('total')).limit(3).all()
+        for customer in result:
+            top_customers.append(
+                {'client_name': customer[0], 'total': customer[1]})
+        return top_customers if len(top_customers) > 0 else {}
+
+    @classmethod
+    def get_full_report(cls) -> dict:
+        return {
+            'top_customers': cls.get_top_customers(),
+            'most_requested_ingredient': cls.get_most_requested_ingredient(),
+            'month_with_most_revenue': cls.get_month_with_most_revenue()
+        }
