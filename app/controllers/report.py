@@ -1,4 +1,4 @@
-from ..repositories.managers import ReportManager
+from ..repositories.managers import ReportFacade, ReportManager
 from .base import BaseController
 
 class ReportController(BaseController):
@@ -6,5 +6,5 @@ class ReportController(BaseController):
 
     @classmethod
     def get_report(cls):
-        return ReportManager.get_full_report(), None
+        return ReportFacade(ReportManager).get_full_report(), None
 
