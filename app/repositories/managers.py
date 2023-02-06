@@ -112,10 +112,24 @@ class ReportManager(BaseManager):
                 {'client_name': customer[0], 'total': customer[1]})
         return top_customers if len(top_customers) > 0 else {}
 
-    @classmethod
-    def get_full_report(cls) -> dict:
+
+class ReportFacade:
+
+    def __init__(self, report_manager: ReportManager):
+        self.report_manager = report_manager
+
+    def get_most_requested_ingredient(self) -> dict:
+        return self.report_manager.get_most_requested_ingredient()
+
+    def get_month_with_most_revenue(self) -> dict:
+        return self.report_manager.get_month_with_most_revenue()
+
+    def get_top_customers(self) -> list:
+        return self.report_manager.get_top_customers()
+
+    def get_full_report(self) -> dict:
         return {
-            'top_customers': cls.get_top_customers(),
-            'most_requested_ingredient': cls.get_most_requested_ingredient(),
-            'month_with_most_revenue': cls.get_month_with_most_revenue()
+            'top_customers': self.get_top_customers(),
+            'most_requested_ingredient': self.get_most_requested_ingredient(),
+            'month_with_most_revenue': self.get_month_with_most_revenue()
         }
